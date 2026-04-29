@@ -1,4 +1,4 @@
-# ECG Classification — CNN 1D on PTB-XL
+# ECG Classification — CNN 1D on PTB-XL 🫀
 
 Classification automatique d'électrocardiogrammes en 5 catégories diagnostiques
 à l'aide d'un réseau de neurones convolutif 1D entraîné sur le dataset PTB-XL.
