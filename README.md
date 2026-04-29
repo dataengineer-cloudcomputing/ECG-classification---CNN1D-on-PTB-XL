@@ -26,3 +26,32 @@ L'objectif est de classifier chaque ECG dans l'une des 5 superclasses :
 ## Architecture
 
 CNN 1D à 3 blocs convolutifs :
+Input (batch, 12, 1000)
+→ Conv1D(12→32, k=7) + BatchNorm + ReLU + MaxPool  → (batch, 32, 500)
+→ Conv1D(32→64, k=5) + BatchNorm + ReLU + MaxPool  → (batch, 64, 250)
+→ Conv1D(64→128, k=5) + BatchNorm + ReLU + MaxPool → (batch, 128, 125)
+→ GlobalAvgPool                                     → (batch, 128)
+→ Linear(128→64) + ReLU + Dropout(0.5)
+→ Linear(64→5)
+
+## Utilisation rapide après clonage
+
+# 1. Cloner le projet
+git clone https://github.com/dataengineer-cloudcomputing/ECG-classification---CNN1D-on-PTB-XL.git
+cd ECG-classification---CNN1D-on-PTB-XL
+
+# 2. Installer les dépendances
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 3. Télécharger les données
+aws s3 sync --no-sign-request \
+  s3://physionet-open/ptb-xl/1.0.3/records100/ ./data/ptb-xl/records100/
+aws s3 cp --no-sign-request \
+  s3://physionet-open/ptb-xl/1.0.3/ptbxl_database.csv ./data/ptb-xl/
+aws s3 cp --no-sign-request \
+  s3://physionet-open/ptb-xl/1.0.3/scp_statements.csv ./data/ptb-xl/
+
+# 4. Lancer la démo
+streamlit run app.py
